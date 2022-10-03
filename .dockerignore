@@ -1,0 +1,6 @@
+.env
+.vscode
+.next
+node_modules
+dist
+README.md
