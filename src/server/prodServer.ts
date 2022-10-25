@@ -30,3 +30,14 @@ app.prepare().then(() => {
     // tslint:disable-next-line:no-console
     console.log(`> Server listening at http://${host}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
 });
+
+async function closeGracefully(signal: "SIGINT" | "SIGTERM") {
+    console.log(`Received signal to terminate: ${signal}`);
+
+    await app.close();
+
+    process.kill(process.pid, signal);
+}
+
+process.once("SIGINT", closeGracefully);
+process.once("SIGTERM", closeGracefully);
